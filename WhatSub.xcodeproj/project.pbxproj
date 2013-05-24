@@ -40,8 +40,6 @@
 		04F72EF8126F759D007C0205 /* Defaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 04F72EF7126F759D007C0205 /* Defaults.plist */; };
 		04F931600FB8579E003FFCB3 /* FrameRateCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F9315F0FB8579E003FFCB3 /* FrameRateCalculator.m */; };
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
-		8901B126174EE72C00464BE1 /* SubtitleSourceEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 8901B125174EE72C00464BE1 /* SubtitleSourceEngine.m */; };
-		8901B127174EE72C00464BE1 /* SubtitleSourceEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 8901B125174EE72C00464BE1 /* SubtitleSourceEngine.m */; };
 		8901B12A174EE74300464BE1 /* OpensubtitlesEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 8901B129174EE74300464BE1 /* OpensubtitlesEngine.m */; };
 		89DFFB22174EFA4C0039653E /* XMLRPC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89DFFB21174EFA4C0039653E /* XMLRPC.framework */; };
 		89DFFB23174EFA4C0039653E /* XMLRPC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89DFFB21174EFA4C0039653E /* XMLRPC.framework */; };
@@ -115,11 +113,10 @@
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		32CA4F630368D1EE00C91783 /* WhatSub_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WhatSub_Prefix.pch; sourceTree = "<group>"; };
-		8901B124174EE72C00464BE1 /* SubtitleSourceEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubtitleSourceEngine.h; sourceTree = "<group>"; };
-		8901B125174EE72C00464BE1 /* SubtitleSourceEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubtitleSourceEngine.m; sourceTree = "<group>"; };
 		8901B128174EE74300464BE1 /* OpensubtitlesEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpensubtitlesEngine.h; sourceTree = "<group>"; };
 		8901B129174EE74300464BE1 /* OpensubtitlesEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpensubtitlesEngine.m; sourceTree = "<group>"; };
 		89DFFB21174EFA4C0039653E /* XMLRPC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = XMLRPC.framework; sourceTree = "<group>"; };
+		89DFFB25174F8E510039653E /* SubtitleSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SubtitleSource.h; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* WhatSub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhatSub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -318,12 +315,11 @@
 		8901B123174EE65300464BE1 /* Engine */ = {
 			isa = PBXGroup;
 			children = (
+				89DFFB25174F8E510039653E /* SubtitleSource.h */,
 				04C34C7F11123FEB0080BDEB /* NapiProjektEngine.h */,
 				04C34C8011123FEB0080BDEB /* NapiProjektEngine.m */,
 				8901B128174EE74300464BE1 /* OpensubtitlesEngine.h */,
 				8901B129174EE74300464BE1 /* OpensubtitlesEngine.m */,
-				8901B124174EE72C00464BE1 /* SubtitleSourceEngine.h */,
-				8901B125174EE72C00464BE1 /* SubtitleSourceEngine.m */,
 			);
 			name = Engine;
 			sourceTree = "<group>";
@@ -449,7 +445,6 @@
 				049C197D1396822200123E08 /* AppPreferences.m in Sources */,
 				049C197C139681EC00123E08 /* NapiProjektEngine.m in Sources */,
 				049C1976139679DF00123E08 /* TestNapiProjektEngine.m in Sources */,
-				8901B127174EE72C00464BE1 /* SubtitleSourceEngine.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -470,7 +465,6 @@
 				04AFD19513702BBB00AFE116 /* SubtitlesDownloader.m in Sources */,
 				04EBB4FD1371B6E500CC15DF /* AppPreferences.m in Sources */,
 				04AC7D091406DCDA00FCF14F /* FileArchiver.m in Sources */,
-				8901B126174EE72C00464BE1 /* SubtitleSourceEngine.m in Sources */,
 				8901B12A174EE74300464BE1 /* OpensubtitlesEngine.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -501,6 +495,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -533,6 +528,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -562,6 +558,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -587,6 +584,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -595,7 +593,6 @@
 					"\"$(SRCROOT)\"",
 					"\"$(SRCROOT)/Frameworks\"",
 				);
-				GCC_ENABLE_OBJC_GC = required;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = WhatSub_Prefix.pch;
@@ -610,6 +607,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_ENABLE_OBJC_GC = required;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -624,6 +622,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_ENABLE_OBJC_GC = required;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;

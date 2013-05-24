@@ -7,14 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "SubtitleSourceEngine.h"
+#import "SubtitleSource.h"
 
 @class NapiProjektEngine;
 
 @interface SubtitlesDownloader : NSObject
-@property SubtitleSourceEngine* engine;
+@property id <SubtitleSource> engine;
 
-- (id)initWithEngine:(SubtitleSourceEngine*)initEngine;
+- (id)initWithEngine:(id <SubtitleSource>)initEngine;
 - (NSString*)download:(NSString*)pathToFile;
 
 @end

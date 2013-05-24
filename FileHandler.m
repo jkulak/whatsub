@@ -14,6 +14,7 @@
 #import "AppPreferences.h"
 #import "NapiProjektEngine.h"
 #import "OpensubtitlesEngine.h"
+#import "SubtitleSource.h"  
 
 @implementation FileHandler
 
@@ -90,13 +91,22 @@
     else if ([movieExtensions containsObject:extension])
     {
         NSString* outputFormat = [AppPreferences getOutputFormat];
-        NSString* user = [AppPreferences getNPUsername];
-        NSString* pass = [AppPreferences getNPPassword];
-        NSString* lang = [AppPreferences getNPLanguageCode];
+
+        id<SubtitleSource> engine;
         
-//        SubtitleSourceEngine* engine = [[NapiProjektEngine alloc] initWithUser:user password:pass language:lang];
-        
-        SubtitleSourceEngine* engine = [[OpensubtitlesEngine alloc] initWithUser:user password:pass language:lang];
+        if (0) {
+            
+            // go with NapiProjekt
+            NSString* user = [AppPreferences getNPUsername];
+            NSString* pass = [AppPreferences getNPPassword];
+            NSString* lang = [AppPreferences getNPLanguageCode];
+            
+            engine = [[NapiProjektEngine alloc] initWithUser:user password:pass language:lang];
+        } else {
+            
+            // Go with Opensubtitles
+            engine = [[OpensubtitlesEngine alloc] init];
+        }
         
         SubtitlesDownloader* downloader = [[SubtitlesDownloader alloc] initWithEngine:engine];
         NSString* downloadedTmpFilePath = [downloader download:pathToFile];

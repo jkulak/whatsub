@@ -10,4 +10,6 @@
 
 @protocol SubtitleSource <NSObject>
 
+- (NSData*)retrieveSubtitlesForMovieInPath:(NSString*)moviePath hash:(NSString**)hashPtr;
+
 @end

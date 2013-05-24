@@ -7,14 +7,13 @@
 //
 
 #import "SubtitlesDownloader.h"
-#import "NapiProjektEngine.h"
+#import "SubtitleSource.h"
 
 @implementation SubtitlesDownloader
 
-- (id)initWithEngine:(SubtitleSourceEngine *)engine {
+- (id)initWithEngine:(id <SubtitleSource>)engine {
     
-	if (self = [super init])
-    {
+	if (self = [super init]) {
         [self setEngine:engine];
     }
 
@@ -26,8 +25,7 @@
 	NSString* hash = nil;
 	NSData* fileData = [[self engine] retrieveSubtitlesForMovieInPath:pathToFile hash:&hash];
 	
-	if (fileData != nil)
-	{
+	if (fileData != nil) {
 		NSString* temporaryDirectory = NSTemporaryDirectory();
 		NSString* p7zipFileName = [hash stringByAppendingPathExtension:@"7z"];
 		NSString* p7zipOutputFilePath = [temporaryDirectory stringByAppendingPathComponent:p7zipFileName];

@@ -7,9 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "SubtitleSourceEngine.h"
 #import "xmlrpc/xmlrpc.h"
+#import "SubtitleSource.h"
 
-@interface OpensubtitlesEngine : SubtitleSourceEngine <XMLRPCConnectionDelegate>
+@interface OpensubtitlesEngine : NSObject <XMLRPCConnectionDelegate,SubtitleSource>
+
+    @property (retain) NSString* token;
+
+- (NSString*) authenticate;
 
 @end

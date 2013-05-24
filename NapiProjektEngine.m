@@ -8,8 +8,22 @@
 
 #import "NapiProjektEngine.h"
 #import <openssl/md5.h>
+#import "SubtitleSource.h"
+
+#import <CommonCrypto/CommonDigest.h>
 
 @implementation NapiProjektEngine
+
+- (id)initWithUser:(NSString*)username password:(NSString*)password language:(NSString*)langCode {
+    
+    if (self = [super init]) {
+        
+        [self setUser:username];
+        [self setPass:password];
+        [self setLang:langCode];
+    }
+    return self;
+}
 
 - (NSString*) getHash: (NSString*) moviePath {
     
@@ -28,6 +42,47 @@
 	
 	return [NSString stringWithFormat:urlFormatString, [self lang], hash, token, [self user], [self pass]];
 }
+
+- (NSData*)retrieveSubtitlesForMovieInPath:(NSString*)moviePath hash:(NSString**)hashPtr {
+    
+	NSError* error = nil;
+    
+    NSString* hash = [self getHash:moviePath];
+	NSString* token = [self getToken:hash];
+	NSString* urlString = [self getURLForHash:hash token:token];
+    
+	NSURL* url = [NSURL URLWithString:urlString];
+	
+	NSLog(@"Retrieving subtitles from %@", urlString);
+	NSData* contents = [NSData dataWithContentsOfURL:url options:0 error:&error];
+	
+	[hash retain];
+	*hashPtr = hash;
+	
+	char buffer[4];
+	[contents getBytes:(char*)buffer length:sizeof(buffer)];
+	
+	NSString* magic = [[NSString alloc] initWithBytes:buffer length:sizeof(buffer) encoding:NSASCIIStringEncoding];
+	if ([magic hasPrefix:@"7z"])
+    {
+		return contents;
+	}
+    
+    NSString* reason;
+    NSString* movieFileName = [moviePath lastPathComponent];
+    if ([magic isEqualToString:@"NPc0"])
+    {
+        reason = [NSString stringWithFormat:@"Subtitles not found for movie %@", movieFileName];
+    }
+    else
+    {
+        reason = [NSString stringWithFormat:@"Subtitles for movie %@ could not be downloaded", movieFileName];
+    }
+	
+    NSException* e = [NSException exceptionWithName:@"SubtitlesException" reason:reason userInfo:nil];
+    @throw e;
+}
+
 
 - (NSString*)npFDigest:(NSString*)input {
 	if ([input length] != 32) return @"";
@@ -73,22 +128,24 @@
 	NSFileHandle *fileHandle = [NSFileHandle fileHandleForReadingAtPath:path];
 	NSData* data = [fileHandle readDataOfLength:length];
 	[data getBytes:buffer length:length];
-	
-	unsigned char *digest = MD5(buffer, length, NULL);
-	NSString* md5String = [NSString stringWithFormat:@"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
-						   digest[0], digest[1],
-						   digest[2], digest[3],
-						   digest[4], digest[5],
-						   digest[6], digest[7],
-						   digest[8], digest[9],
-						   digest[10], digest[11],
-						   digest[12], digest[13],
-						   digest[14], digest[15]
-						   ];
+    
+    NSString* md5String = [self MD5StringOfData:data];
 	
 	free(buffer);
 	
 	return md5String;
+}
+
+- (NSString*) MD5StringOfData:(NSData*)inputData {
+
+	unsigned char outputData[CC_MD5_DIGEST_LENGTH];
+	CC_MD5([inputData bytes], [inputData length], outputData);
+	
+	NSMutableString* hashStr = [NSMutableString string];
+	int i = 0;
+	for (i = 0; i < CC_MD5_DIGEST_LENGTH; ++i)
+		[hashStr appendFormat:@"%02x", outputData[i]];
+	return hashStr;
 }
 
 @end

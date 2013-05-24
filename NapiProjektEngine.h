@@ -7,11 +7,17 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "SubtitleSourceEngine.h"
+#import "SubtitleSource.h"
 
-@interface NapiProjektEngine : SubtitleSourceEngine
+@interface NapiProjektEngine : NSObject <SubtitleSource>
 
+@property (assign) NSString* user;
+@property (assign) NSString* pass;
+@property (assign) NSString* lang;
+
+- (id)initWithUser:(NSString*)username password:(NSString*)password language:(NSString*)langCode;
 - (NSString*)npFDigest:(NSString*)input;
 - (NSString*)md5ForFileInPath:(NSString*)path limitedTo10MB:(BOOL)limited;
+- (NSString*) MD5StringOfData:(NSData*)inputData;
 
 @end
