@@ -8,7 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import "SubtitleSourceEngine.h"
+#import "xmlrpc/xmlrpc.h"
 
-@interface OpensubtitlesEngine : SubtitleSourceEngine
+@interface OpensubtitlesEngine : SubtitleSourceEngine <XMLRPCConnectionDelegate>
 
 @end

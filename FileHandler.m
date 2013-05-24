@@ -94,9 +94,9 @@
         NSString* pass = [AppPreferences getNPPassword];
         NSString* lang = [AppPreferences getNPLanguageCode];
         
-        SubtitleSourceEngine* engine = [[NapiProjektEngine alloc] initWithUser:user password:pass language:lang];
+//        SubtitleSourceEngine* engine = [[NapiProjektEngine alloc] initWithUser:user password:pass language:lang];
         
-//        SubtitleSourceEngine* engine = [[OpensubtitlesEngine alloc] initWithUser:user password:pass language:lang];
+        SubtitleSourceEngine* engine = [[OpensubtitlesEngine alloc] initWithUser:user password:pass language:lang];
         
         SubtitlesDownloader* downloader = [[SubtitlesDownloader alloc] initWithEngine:engine];
         NSString* downloadedTmpFilePath = [downloader download:pathToFile];

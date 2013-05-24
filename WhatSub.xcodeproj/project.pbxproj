@@ -43,6 +43,9 @@
 		8901B126174EE72C00464BE1 /* SubtitleSourceEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 8901B125174EE72C00464BE1 /* SubtitleSourceEngine.m */; };
 		8901B127174EE72C00464BE1 /* SubtitleSourceEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 8901B125174EE72C00464BE1 /* SubtitleSourceEngine.m */; };
 		8901B12A174EE74300464BE1 /* OpensubtitlesEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 8901B129174EE74300464BE1 /* OpensubtitlesEngine.m */; };
+		89DFFB22174EFA4C0039653E /* XMLRPC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89DFFB21174EFA4C0039653E /* XMLRPC.framework */; };
+		89DFFB23174EFA4C0039653E /* XMLRPC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89DFFB21174EFA4C0039653E /* XMLRPC.framework */; };
+		89DFFB24174EFA520039653E /* XMLRPC.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 89DFFB21174EFA4C0039653E /* XMLRPC.framework */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
@@ -50,11 +53,12 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		04E1C25A1406EAE000BA2B97 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
+			buildActionMask = 12;
+			dstPath = frameworks;
 			dstSubfolderSpec = 10;
 			files = (
 				04E1C2611406EB8A00BA2B97 /* Sparkle.framework in CopyFiles */,
+				89DFFB24174EFA520039653E /* XMLRPC.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -115,6 +119,7 @@
 		8901B125174EE72C00464BE1 /* SubtitleSourceEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubtitleSourceEngine.m; sourceTree = "<group>"; };
 		8901B128174EE74300464BE1 /* OpensubtitlesEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpensubtitlesEngine.h; sourceTree = "<group>"; };
 		8901B129174EE74300464BE1 /* OpensubtitlesEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpensubtitlesEngine.m; sourceTree = "<group>"; };
+		89DFFB21174EFA4C0039653E /* XMLRPC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = XMLRPC.framework; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* WhatSub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhatSub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -127,6 +132,7 @@
 				049C197F1396824700123E08 /* libcrypto.dylib in Frameworks */,
 				049C197A13967E5A00123E08 /* SenTestingKit.framework in Frameworks */,
 				049C197813967D5E00123E08 /* Cocoa.framework in Frameworks */,
+				89DFFB23174EFA4C0039653E /* XMLRPC.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -139,6 +145,7 @@
 				0481167E1370B86400A775F8 /* QTKit.framework in Frameworks */,
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				04C02541140A610B00656AD9 /* Sparkle.framework in Frameworks */,
+				89DFFB22174EFA4C0039653E /* XMLRPC.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -299,6 +306,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				89DFFB21174EFA4C0039653E /* XMLRPC.framework */,
 				04E1C25F1406EB7700BA2B97 /* Sparkle.framework */,
 				049C197B13967EB100123E08 /* Testing Frameworks */,
 				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
@@ -495,7 +503,10 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -525,7 +536,10 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
