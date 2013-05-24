@@ -11,20 +11,20 @@
 
 @implementation SubtitlesDownloader
 
-- (id)initWithEngine:(NapiProjektEngine*)napiProjektEngine
-{	
-	self = [super init];
-	if (self)
+- (id)initWithEngine:(SubtitleSourceEngine *)engine {
+    
+	if (self = [super init])
     {
-        engine = napiProjektEngine;
+        [self setEngine:engine];
     }
+
     return self;
 }
 
-- (NSString*)download:(NSString*)pathToFile
-{
+- (NSString*)download:(NSString*)pathToFile {
+    
 	NSString* hash = nil;
-	NSData* fileData = [engine retrieveSubtitlesForMovieInPath:pathToFile hash:&hash];
+	NSData* fileData = [[self engine] retrieveSubtitlesForMovieInPath:pathToFile hash:&hash];
 	
 	if (fileData != nil)
 	{

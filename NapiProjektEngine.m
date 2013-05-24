@@ -11,67 +11,25 @@
 
 @implementation NapiProjektEngine
 
-- (id)initWithUser:(NSString*)username password:(NSString*)password language:(NSString*)langCode
-{	
-	self = [super init];
-    if (self)
-    {
-        user = username;
-        pass = password;
-        lang = langCode;
-    }
-    return self;
-}
-
-- (NSData*)retrieveSubtitlesForMovieInPath:(NSString*)moviePath hash:(NSString**)hashPtr
-{
-	NSString* hash = [self md5ForFileInPath:moviePath limitedTo10MB:YES];
-	NSString* token = [self npFDigest:hash];
-	
-	NSError* error = nil;
-	NSString* urlString = [self getURLForHash:hash token:token];
-	NSURL* url = [NSURL URLWithString:urlString];
-	
-	NSLog(@"Retrieving subtitles from %@", urlString);
-	NSData* contents = [NSData dataWithContentsOfURL:url options:0 error:&error];
-	
-	[hash retain];
-	*hashPtr = hash;
-	
-	char buffer[4];
-	[contents getBytes:(char*)buffer length:sizeof(buffer)];
-	
-	NSString* magic = [[NSString alloc] initWithBytes:buffer length:sizeof(buffer) encoding:NSASCIIStringEncoding];
-	if ([magic hasPrefix:@"7z"])
-    {
-		return contents;
-	}
+- (NSString*) getHash: (NSString*) moviePath {
     
-    NSString* reason;
-    NSString* movieFileName = [moviePath lastPathComponent];
-    if ([magic isEqualToString:@"NPc0"])
-    {
-        reason = [NSString stringWithFormat:@"Subtitles not found for movie %@", movieFileName];
-    }
-    else
-    {
-        reason = [NSString stringWithFormat:@"Subtitles for movie %@ could not be downloaded", movieFileName];
-    }
-	
-    NSException* e = [NSException exceptionWithName:@"SubtitlesException" reason:reason userInfo:nil];
-    @throw e;
+    return [self md5ForFileInPath:moviePath limitedTo10MB:YES];
 }
 
-- (NSString*)getURLForHash:(NSString*)hash token:(NSString*)token
-{	
+- (NSString*) getToken:(NSString*) hash {
+    
+    return [self npFDigest:hash];
+}
+
+- (NSString*)getURLForHash:(NSString*)hash token:(NSString*)token {
+
 	NSString* urlFormatString = 
 		@"http://napiprojekt.pl/unit_napisy/dl.php?l=%@&f=%@&t=%@&v=other&kolejka=false&nick=%@&pass=%@";
 	
-	return [NSString stringWithFormat:urlFormatString, lang, hash, token, user, pass];
+	return [NSString stringWithFormat:urlFormatString, [self lang], hash, token, [self user], [self pass]];
 }
 
-- (NSString*)npFDigest:(NSString*)input
-{
+- (NSString*)npFDigest:(NSString*)input {
 	if ([input length] != 32) return @"";
 	
 	int idx[] = { 0xe, 0x3, 0x6, 0x8, 0x2 },

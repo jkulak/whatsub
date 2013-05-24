@@ -10,20 +10,21 @@
 #import "FileArchiver.h"
 #import "SubtitlesConverter.h"
 #import "SubtitlesDownloader.h"
-#import "NapiProjektEngine.h"
 #import "AppController.h"
 #import "AppPreferences.h"
+#import "NapiProjektEngine.h"
+#import "OpensubtitlesEngine.h"
 
 @implementation FileHandler
 
-- (id)init
-{	
-	self = [super init];
-    if (self)
+- (id)init {
+
+    if (self = [super init])
     {
         subtitlesExtensions = [AppPreferences typeExtensionsForName:@"Subtitles"];
         movieExtensions = [AppPreferences typeExtensionsForName:@"Movie"];
     }
+
     return self;
 }
 
@@ -93,7 +94,10 @@
         NSString* pass = [AppPreferences getNPPassword];
         NSString* lang = [AppPreferences getNPLanguageCode];
         
-        NapiProjektEngine* engine = [[NapiProjektEngine alloc] initWithUser:user password:pass language:lang];
+        SubtitleSourceEngine* engine = [[NapiProjektEngine alloc] initWithUser:user password:pass language:lang];
+        
+//        SubtitleSourceEngine* engine = [[OpensubtitlesEngine alloc] initWithUser:user password:pass language:lang];
+        
         SubtitlesDownloader* downloader = [[SubtitlesDownloader alloc] initWithEngine:engine];
         NSString* downloadedTmpFilePath = [downloader download:pathToFile];
         
