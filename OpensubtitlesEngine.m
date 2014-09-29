@@ -15,38 +15,35 @@
 {
     self = [super init];
     if (self) {
-        [self setToken:[self authenticate]];
+        [self authenticate];
     }
     return self;
 }
 
-- (NSString*) authenticate
+- (void) callProcedure:(NSString*)procedure params:(NSArray*)params
 {
     NSURL *URL = [NSURL URLWithString: @"http://api.opensubtitles.org/xml-rpc"];
     XMLRPCRequest *request = [[XMLRPCRequest alloc] initWithURL: URL];
     XMLRPCConnectionManager *manager = [XMLRPCConnectionManager sharedManager];
-    
-    [request setMethod: @"LogIn" withParameters:[NSArray arrayWithObjects:@"", @"", @"", @"OS Test User Agent", nil]];
+    [request setMethod: procedure withParameters:params];
     [manager spawnConnectionWithXMLRPCRequest: request delegate: self];
-    
     [request release];
-    
-    return @"sdsfsdfsdfsdfsdf";
+}
+
+- (void) authenticate
+{
+    [self callProcedure:@"LogIn" params:[NSArray arrayWithObjects:@"", @"", @"", @"OS Test User Agent", nil]];
+}
+
+- (void) checkMovieHash:(NSString*)hash
+{
+    NSLog(@"Current token: %@", [self token]);
+    [self callProcedure:@"CheckMovieHash" params:[NSArray arrayWithObjects:[self token], [NSArray arrayWithObjects:hash, nil], nil]];
 }
 
 - (NSData*)retrieveSubtitlesForMovieInPath:(NSString*)moviePath hash:(NSString**)hashPtr {
 
-//    NSURL *URL = [NSURL URLWithString: @"http://api.opensubtitles.org/xml-rpc"];
-//    XMLRPCRequest *request = [[XMLRPCRequest alloc] initWithURL: URL];
-//    XMLRPCConnectionManager *manager = [XMLRPCConnectionManager sharedManager];
-//
-//    [request setMethod: @"CheckMovieHash" withParameters:[NSArray arrayWithObjects:@"08vm7eggi5j310d4vhe6dcev55", [NSArray arrayWithObjects:@"ae34f157eefc093c", nil], nil]];
-//
-//    NSLog(@"Request body: %@", [request body]);
-//
-//    [manager spawnConnectionWithXMLRPCRequest: request delegate: self];
-//
-//    [request release];
+    [self checkMovieHash:@"dab462412773581c"];
     return 0;
 }
 
@@ -57,15 +54,13 @@
         NSLog(@"Fault string: %@", [response faultString]);
     } else {
         
-        NSLog(@"Parsed response: %@", [response object]);
+
+        NSDictionary *result = [response object];
+        NSLog(@"Parsed response: %@", result);
         
         if ([@"LogIn" isEqual: [request method]]) {
             // LogIn
-//            NSLog(@"%@", [request parameters]);
-//            NSLog(@"%@", [response object]);
-            
-            NSString *mySmallerString = [[response object] substringToIndex:4];
-            NSLog(@"%@", mySmallerString);
+            [self setToken:[result objectForKey:@"token"]];
             
         } else if ([@"GetMovieHash" isEqual: [request method]]) {
 

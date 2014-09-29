@@ -14,6 +14,8 @@
 
     @property (retain) NSString* token;
 
-- (NSString*) authenticate;
+- (void) callProcedure:(NSString*)procedure params:(NSArray*)params;
+- (void) authenticate;
+- (void) checkMovieHash:(NSString*)hash;
 
 @end
